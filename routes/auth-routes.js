@@ -13,11 +13,15 @@ router.get("/logout", (req, res) => {
   res.send("Logging out...");
 });
 
-//auth google
-router.get("/google", passport.authenticate("google", { scope: ["profile"] }));
+//auth with google
+router.get(
+  "/google",
+  passport.authenticate("google", { scope: ["profile", "email"] })
+);
 
-router.get("/google/redirect", (req, res) => {
-  res.send("Redirect to callback url");
+//callback route for google to redirect to
+router.get("/google/redirect", passport.authenticate("google"), (req, res) => {
+  res.redirect("/profile/");
 });
 
 module.exports = router;
