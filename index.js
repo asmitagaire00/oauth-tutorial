@@ -9,7 +9,6 @@ const cookieParser = require("cookie-parser");
 const authRouter = require("./routes/auth-routes");
 const profileRouter = require("./routes/profile-routes");
 const passportSetup = require("./config/passport-setup");
-const keys = require("./config/keys");
 
 require("dotenv").config();
 
@@ -17,7 +16,10 @@ require("dotenv").config();
 app.set("view engine", "ejs");
 
 app.use(
-  cookieSession({ maxAge: 24 * 60 * 60 * 1000, keys: [keys.session.cookieKey] })
+  cookieSession({
+    maxAge: 24 * 60 * 60 * 1000,
+    keys: [process.env.cookie_key],
+  })
 );
 
 app.use(bodyParser.json());
